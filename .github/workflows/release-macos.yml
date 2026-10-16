@@ -1,0 +1,98 @@
+name: Build macOS installers
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build ${{ matrix.arch }} installer
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            runner: macos-15
+            rust-target: aarch64-apple-darwin
+          - arch: x86_64
+            runner: macos-15-intel
+            rust-target: x86_64-apple-darwin
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust-target }}
+
+      - name: Install CMake
+        run: brew install cmake
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build native helpers
+        run: bash scripts/bootstrap-native.sh
+
+      - name: Build Tauri app
+        run: npm run tauri build -- --target "${{ matrix.rust-target }}" --bundles app
+
+      - name: Build installer package
+        env:
+          PACKAGE_VERSION: ${{ github.ref_type == 'tag' && github.ref_name || 'manual-build' }}
+        run: bash scripts/create-macos-pkg.sh "${{ matrix.rust-target }}" "$PACKAGE_VERSION" "${{ matrix.arch }}"
+
+      - name: Verify installer payload
+        run: |
+          pkg="Screenbox-${{ github.ref_type == 'tag' && github.ref_name || 'manual-build' }}-macOS-${{ matrix.arch }}.pkg"
+          pkgutil --payload-files "$pkg" | grep -Fx './Applications/Screenbox.app/Contents/Resources/icon.icns'
+          sudo installer -pkg "$pkg" -target /
+          test -d /Applications/Screenbox.app
+          test -f /Applications/Screenbox.app/Contents/Resources/icon.icns
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleIconFile' /Applications/Screenbox.app/Contents/Info.plist | grep -Fx 'icon.icns'
+          open -a /Applications/Screenbox.app
+          launched=0
+          for attempt in {1..20}; do
+            if pgrep -x screenbox >/dev/null; then launched=1; break; fi
+            sleep 1
+          done
+          killall screenbox >/dev/null 2>&1 || true
+          test "$launched" -eq 1 || { echo 'Screenbox did not launch from /Applications' >&2; exit 1; }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Screenbox-macOS-${{ matrix.arch }}
+          path: Screenbox-*.pkg
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    name: Publish GitHub release
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Screenbox ${{ github.ref_name }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: release-assets/*.pkg

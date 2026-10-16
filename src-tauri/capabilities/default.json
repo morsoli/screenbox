@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Main Screenbox window capabilities",
+  "windows": ["main", "timer"],
+  "permissions": ["core:default", "dialog:default", "clipboard-manager:allow-write-text", "wdio:default", "wdio-webdriver:default"]
+}

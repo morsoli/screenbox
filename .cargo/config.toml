@@ -1,0 +1,5 @@
+# The host's global Cargo config replaces crates.io with a legacy Tuna Git index.
+# Use a working sparse endpoint for that source; Cargo ignores this source on hosts
+# that do not replace crates.io with `tuna`.
+[source.tuna]
+registry = "sparse+https://rsproxy.cn/index/"
