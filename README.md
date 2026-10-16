@@ -15,7 +15,6 @@
   <img src="https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white" alt="TypeScript 6" />
   <a href="https://github.com/morsoli/screenbox/releases/latest"><img src="https://img.shields.io/github/downloads/morsoli/screenbox/total?label=downloads" alt="GitHub downloads" /></a>
   <img src="https://img.shields.io/badge/release-macOS_.pkg-4C7D5A?logo=apple&logoColor=white" alt="macOS installer package" />
-  <img src="https://img.shields.io/badge/release-workflow-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions release workflow" />
   </p>
 </div>
 
