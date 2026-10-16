@@ -4,6 +4,7 @@
   <p>Record your screen. Make every detail count.</p>
   <p>
   <a href="./README_CN.md">简体中文</a> ·
+  <a href="https://github.com/morsoli/screenbox/releases/latest">Download</a> ·
   <a href="#implementation">Implementation</a> ·
   <a href="#run-locally">Run locally</a>
   </p>
@@ -12,6 +13,7 @@
   <img src="https://img.shields.io/badge/Tauri-2-FFC131?logo=tauri&logoColor=white" alt="Tauri 2" />
   <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=111111" alt="React 19" />
   <img src="https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white" alt="TypeScript 6" />
+  <a href="https://github.com/morsoli/screenbox/releases/latest"><img src="https://img.shields.io/github/downloads/morsoli/screenbox/total?label=downloads" alt="GitHub downloads" /></a>
   <img src="https://img.shields.io/badge/release-macOS_.pkg-4C7D5A?logo=apple&logoColor=white" alt="macOS installer package" />
   <img src="https://img.shields.io/badge/release-workflow-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions release workflow" />
   </p>
@@ -19,7 +21,14 @@
 
 ---
 
-Screenbox is a personal macOS screen recorder. It captures a display, a window, or a region on one display, then lets you trim, crop, follow the cursor, highlight it, add text callouts, and export a local MP4 or WebM. 
+Screenbox is a personal macOS screen recorder. It captures a display, a window, or a region on one display, then lets you trim, crop, follow the cursor, highlight it, add text callouts, and export a local MP4 or WebM.
+
+## Download and release
+
+Download the latest macOS `.pkg` installers from [GitHub Releases](https://github.com/morsoli/screenbox/releases/latest). Each release includes Apple silicon (`arm64`) and Intel (`x86_64`) builds.
+
+To publish a release, push a version tag such as `v0.1.1` (`git tag v0.1.1 && git push origin v0.1.1`). GitHub Actions builds and verifies both installers, then attaches them to that release. Running the workflow manually from `main` only builds downloadable Actions artifacts; run it from a `v*` tag to publish a release.
+
 ## Run locally
 
 Requires **macOS 15 or newer**, Xcode Command Line Tools, Rust, Node.js 22+, CMake, and ffmpeg on `PATH`. Install those once with your preferred package manager. From this directory, use one command:

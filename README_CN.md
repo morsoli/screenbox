@@ -4,6 +4,7 @@
   <p>录制屏幕，让每个细节更清晰。</p>
   <p>
   <a href="./README.md">English</a> ·
+  <a href="https://github.com/morsoli/screenbox/releases/latest">下载</a> ·
   <a href="#实现">实现</a> ·
   <a href="#本地运行">本地运行</a>
   </p>
@@ -12,6 +13,7 @@
   <img src="https://img.shields.io/badge/Tauri-2-FFC131?logo=tauri&logoColor=white" alt="Tauri 2" />
   <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=111111" alt="React 19" />
   <img src="https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white" alt="TypeScript 6" />
+  <a href="https://github.com/morsoli/screenbox/releases/latest"><img src="https://img.shields.io/github/downloads/morsoli/screenbox/total?label=下载量" alt="GitHub 下载量" /></a>
   <img src="https://img.shields.io/badge/发行包-macOS_.pkg-4C7D5A?logo=apple&logoColor=white" alt="macOS 安装包" />
   <img src="https://img.shields.io/badge/发布工作流-GitHub_Actions-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions 发布工作流" />
   </p>
@@ -20,6 +22,12 @@
 ---
 
 Screenbox 是一款个人使用的 macOS 屏幕录制应用。它支持录制屏幕、窗口或单显示器区域，之后可裁剪、缩放、跟随光标、突出显示光标、添加文字标注，并导出本地 MP4 或 WebM。
+
+## 下载与发布
+
+从 [GitHub Releases](https://github.com/morsoli/screenbox/releases/latest) 下载最新 macOS `.pkg` 安装包。每个版本提供 Apple 芯片（`arm64`）和 Intel（`x86_64`）构建。
+
+发布新版本时，推送版本标签（例如 `git tag v0.1.1 && git push origin v0.1.1`）。GitHub Actions 会构建并验证两个架构的安装包，然后附加到该 Release。若在 `main` 分支手动运行工作流，只会生成可下载的 Actions 构建产物；从 `v*` 标签手动运行才会发布 Release。
 
 ## 本地运行
 
