@@ -23,12 +23,6 @@
 
 Screenbox is a personal macOS screen recorder. It captures a display, a window, or a region on one display, then lets you trim, crop, follow the cursor, highlight it, add text callouts, and export a local MP4 or WebM.
 
-## Download and release
-
-Download the latest macOS `.pkg` installers from [GitHub Releases](https://github.com/morsoli/screenbox/releases/latest). Each release includes Apple silicon (`arm64`) and Intel (`x86_64`) builds.
-
-To publish a release, push a version tag such as `v0.1.1` (`git tag v0.1.1 && git push origin v0.1.1`). GitHub Actions builds and verifies both installers, then attaches them to that release. Running the workflow manually from `main` only builds downloadable Actions artifacts; run it from a `v*` tag to publish a release.
-
 ## Run locally
 
 Requires **macOS 15 or newer**, Xcode Command Line Tools, Rust, Node.js 22+, CMake, and ffmpeg on `PATH`. Install those once with your preferred package manager. From this directory, use one command:
